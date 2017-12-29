@@ -8,7 +8,7 @@ metricbeat.modules:
       - memory
       - network
 
-  - module: postgres
+  - module: postgresql
       period: 1m
       metricsets:
         - database

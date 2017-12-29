@@ -42,15 +42,24 @@ services:
     depends_on:
       - elasticsearch
 
-  filebeat:
-    build: 
-      context: filebeat/
-    volumes:
-      - /home/stepium/matrix/tmp/logs/circus:/var/log/circus
+#  filebeat:
+#    build:
+#      context: filebeat/
+#    volumes:
+#      - /home/stepium/matrix/tmp/logs/circus:/var/log/circus
+#    networks:
+#      - elk
+#    depends_on:
+#      - logstash
+
+  metricbeat:
+    build:
+      context: metricbeat/
     networks:
       - elk
     depends_on:
-      - logstash
+      - elasticsearch
+      - kibana
 
 networks:
 

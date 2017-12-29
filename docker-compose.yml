@@ -47,7 +47,6 @@ services:
       context: filebeat/
     volumes:
       - /home/stepium/matrix/tmp/logs/circus:/var/log/circus
-      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:rw
     networks:
       - elk
     depends_on:

@@ -9,12 +9,12 @@ metricbeat.modules:
       - network
 
   - module: postgresql
-      period: 1m
-      metricsets:
-        - database
-        - bgwriter
-        - activity
-      hosts: ["postgres://127.0.0.1:5432"]
+    period: 1m
+    metricsets:
+      - database
+      - bgwriter
+      - activity
+    hosts: ["postgres://127.0.0.1:5432"]
 
   - module: rabbitmq
     metricsets: ["node", "queue"]

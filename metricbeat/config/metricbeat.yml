@@ -7,6 +7,11 @@ metricbeat.modules:
       - load
       - memory
       - network
+      - discio
+    processes: ['.*']
+    process.include_top_n:
+    by_cpu: 5      # include top 5 processes by CPU
+    by_memory: 5   # include top 5 processes by memory
 
   - module: postgresql
     period: 1m
@@ -14,22 +19,22 @@ metricbeat.modules:
       - database
       - bgwriter
       - activity
-    hosts: ["postgres://127.0.0.1:5432"]
+    hosts: ${POSTGRES_HOSTS:["postgres://127.0.0.1:5432"]}
 
   - module: rabbitmq
-    metricsets: ["node", "queue"]
+    metricsets: ${RABBITMQ_METRICSETS:["node", "queue"]}
     period: 1m
-    hosts: ["localhost:5672"]
+    hosts: ${RABBITMQ_HOSTS:["localhost:5672"]}
     username: guest
 
   - module: redis
-    metricsets: ["info", "keyspace"]
+    metricsets: ${REDIS_METRICSETS:["info", "keyspace"]}
     period: 1m
     network: redis
-    hosts: ["127.0.0.1:6379"]
+    hosts: ${REDIS_HOSTS:["127.0.0.1:6379"]}
 
 output.elasticsearch:
-  hosts: ["elasticsearch:9200"]
+  hosts: ${ELASTICSEARCH_HOSTS:["elasticsearch:9200"]}
 setup.kibana:
-  host: "kibana:5601"
+  host: ${KIBANA_HOST:"127.0.0.1:5601"}
 setup.dashboards.enabled: true

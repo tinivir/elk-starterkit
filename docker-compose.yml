@@ -66,6 +66,8 @@ services:
     build:
       context: metricbeat/
     restart: always
+    env_file:
+      - metricbeat.env
     networks:
       - elk
     depends_on:

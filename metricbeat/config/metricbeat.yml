@@ -1,6 +1,6 @@
 metricbeat.modules:
   - module: system
-    period: 1m
+    period: ${SYSTEM_PERIOD:1m}
     metricsets:
       - cpu
       - filesystem
@@ -14,7 +14,7 @@ metricbeat.modules:
     by_memory: 5   # include top 5 processes by memory
 
   - module: postgresql
-    period: 1m
+    period: ${POSTGRES_PERIOD:1m}
     metricsets:
       - database
       - bgwriter
@@ -23,13 +23,13 @@ metricbeat.modules:
 
   - module: rabbitmq
     metricsets: ${RABBITMQ_METRICSETS:["node", "queue"]}
-    period: 1m
+    period: ${RABBITMQ_PERIOD:1m}
     hosts: ${RABBITMQ_HOSTS:["localhost:5672"]}
     username: guest
 
   - module: redis
     metricsets: ${REDIS_METRICSETS:["info", "keyspace"]}
-    period: 1m
+    period: ${REDIS_PERIOD:1m}
     network: redis
     hosts: ${REDIS_HOSTS:["127.0.0.1:6379"]}
 

@@ -8,6 +8,7 @@ services:
     restart: always
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - "127.0.0.1:9200:9200"
       - "127.0.0.1:9300:9300"

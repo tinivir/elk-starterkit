@@ -41,7 +41,7 @@ services:
     volumes:
       - ./kibana/config/:/usr/share/kibana/config:ro
     ports:
-      - "127.0.0.1:5601:5601"
+      - "5601:5601"
     networks:
       - elk
     depends_on:
@@ -53,8 +53,12 @@ services:
     build:
       context: filebeat/
     restart: always
+    command: filebeat -e -strict.perms=false
     volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - /home/stepium/matrix/tmp/logs:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - elk
     depends_on:
@@ -62,21 +66,21 @@ services:
     links:
       - logstash
 
-  metricbeat:
-    build:
-      context: metricbeat/
-    restart: always
-    env_file:
-      - metricbeat.env
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-      - kibana
-    links:
-      - elasticsearch
-      - logstash
-      - kibana
+ # metricbeat:
+ #   build:
+ #     context: metricbeat/
+ #   restart: always
+ #   env_file:
+ #     - metricbeat.env
+ #   networks:
+ #     - elk
+ #   depends_on:
+ #     - elasticsearch
+ #     - kibana
+ #   links:
+ #     - elasticsearch
+ #     - logstash
+ #     - kibana
 
 networks:
 
